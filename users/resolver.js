@@ -1,22 +1,15 @@
 const User = [
   {
-    _id: 7379896908,
+    _id: '7379896908',
     userName: 'clare',
     name: 'Clare',
+    password: '123456',
     age: 18,
     gender: 'female'
   }
 ]
-const resolvers = {
-  Query: {
-    users: (_, args) => {
-      User.find(({ _id }) => {
-        console.log(_id, args._id)
-        return _id === args._id
-      })
-      return User.find(({ _id }) => _id === args._id)
-    }
-  }
-}
 
-module.exports = { resolvers }
+const rootResolver = (_, { password }) =>
+  User.find(user => user.password === password)
+
+module.exports = { rootResolver }
