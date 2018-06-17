@@ -5,7 +5,8 @@ const UserSchema = `
     name: String,
     age: Int,
     gender: String,
-    habits: [Habit]
+    habits: [Habit],
+    token: String
   }
 `
 
