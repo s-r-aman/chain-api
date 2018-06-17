@@ -1,15 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
-const { makeExecutableSchema } = require('graphql-tools')
 
-const { typeDefs } = require('./users/Schema')
-const { resolvers } = require('./users/resolver')
+const { schema } = require('./graphQL/schema')
 
 const app = express()
 const PORT = process.env.PORT || 5000
-
-const schema = makeExecutableSchema({ typeDefs, resolvers })
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
 app.use('/graphiql', graphiqlExpress({ endpointURL: 'graphql' }))
