@@ -1,8 +1,15 @@
-const { rootResolver } = require('./../users/resolver')
+const {
+  root: { login, getUser },
+  mutations: { signUp }
+} = require('./../users/resolver')
 
 const resolver = {
   Query: {
-    users: rootResolver
+    login,
+    getUser
+  },
+  Mutation: {
+    signUp
   }
 }
 

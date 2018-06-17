@@ -9,7 +9,16 @@ const User = [
   }
 ]
 
-const rootResolver = (_, { password }) =>
-  User.find(user => user.password === password)
+const login = (_, { password }) => User.find(user => user.password === password)
 
-module.exports = { rootResolver }
+const signUp = (_, { userName, password, age, gender, name }) => {
+  User.push({ userName, password, age, gender, name })
+  return User.find(user => user.password === password)
+}
+
+const getUser = (_, { token }) =>
+  User.find(({ token: authToken }) => token === authToken)
+
+const root = { login, getUser }
+const mutations = { signUp }
+module.exports = { root, mutations }
