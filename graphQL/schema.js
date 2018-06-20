@@ -13,7 +13,7 @@ const RootQuery = `
   },
   type Mutation {
     signUp(
-      userName: String,
+      username: String,
       name: String,
       password: String,
       age: Int,

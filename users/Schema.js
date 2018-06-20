@@ -1,7 +1,7 @@
 const UserSchema = `
   type User {
     _id: ID,
-    userName: String,
+    username: String,
     name: String,
     age: Int,
     gender: String,
