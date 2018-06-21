@@ -1,4 +1,5 @@
 const db = require('./../database/database')
+const { generateHash, compareHash } = require('./../utils/utils1')
 
 const users = db('users')
 
@@ -13,29 +14,42 @@ const User = [
   }
 ]
 
-const login = (_, { password }) => User.find(user => user.password === password)
+const login = (_, { username, password }) =>
+  users
+    .where('username', username)
+    .then(([firstElement]) => compareHash(firstElement, password))
+    .then(({ result, user }) => {
+      if (!result) {
+        return {}
+      }
+      return user
+    })
+    .catch(err => {
+      throw new Error(err)
+    })
 
 const signUp = (_, { username, password, age, gender, name }) =>
-  users
-    .insert({
-      username,
-      password,
-      age,
-      gender,
-      name,
-      created_at: new Date(),
-      updated_at: new Date()
-    })
-    .returning([
-      'username',
-      'password',
-      'age',
-      'gender',
-      'name',
-      'created_at',
-      'updated_at'
-    ])
-    .then(([firstElement]) => firstElement)
+  generateHash(password).then(hash =>
+    users
+      .insert({
+        username,
+        password: hash,
+        age,
+        gender,
+        name,
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+      .returning([
+        'username',
+        'age',
+        'gender',
+        'name',
+        'created_at',
+        'updated_at'
+      ])
+      .then(([firstElement]) => firstElement)
+  )
 
 const getUser = (_, { token }) =>
   User.find(({ token: authToken }) => token === authToken)

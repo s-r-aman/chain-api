@@ -8,7 +8,7 @@ const { resolvers } = require('./resolvers')
 
 const RootQuery = `
   type Query { 
-    login(password: String): User,
+    login(username: String, password: String): User,
     getUser(token: String): User
   },
   type Mutation {
