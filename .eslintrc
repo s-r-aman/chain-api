@@ -1,7 +1,8 @@
 {
   "extends": [
     "airbnb-base",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
   ],
   "rules": {
     "prettier/prettier": [
@@ -11,17 +12,8 @@
         "semi": false
       }
     ],
-    "semi": [
-      "error",
-      "never"
-    ],
-    "linebreak-style": [
-      "error",
-      "windows"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ]
+    "semi": ["error", "never"],
+    "linebreak-style": ["error", "windows"],
+    "quotes": ["error", "single"]
   }
 }
