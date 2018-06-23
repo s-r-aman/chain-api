@@ -4,7 +4,9 @@ const HabitSchema = `
     difficulty: String!,
     icon: String,
     reminders: [String],
-    progress: Progress
+    coins: Int,
+    diamonds: Int,
+    completed: [String]
   }
 `
 

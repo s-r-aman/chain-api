@@ -2,7 +2,6 @@ const { makeExecutableSchema } = require('graphql-tools')
 
 const { UserSchema } = require('./../users/schema')
 const { HabitSchema } = require('./../habits/schema')
-const { ProgressSchema } = require('./../progress/schema')
 
 const { resolvers } = require('./resolvers')
 
@@ -22,7 +21,7 @@ const RootQuery = `
   }
 `
 
-const typeDefs = [RootQuery, UserSchema, HabitSchema, ProgressSchema]
+const typeDefs = [RootQuery, UserSchema, HabitSchema]
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
