@@ -12,11 +12,11 @@ const RootQuery = `
   },
   type Mutation {
     signUp(
-      username: String,
-      name: String,
-      password: String,
-      age: Int,
-      gender: String,
+      username: String!,
+      name: String!,
+      password: String!,
+      age: Int!,
+      gender: String!,
     ): User,
   }
 `
