@@ -13,20 +13,6 @@ const compareHashMin = dependency => (user, password) =>
     .then(result => Promise.resolve({ result, user }))
     .catch(err => Promise.reject(err))
 
-const loginMin = (db, passwordCompareFn) => (_, { username, password }) =>
-  db
-    .where('username', username)
-    .then(([firstElement]) => passwordCompareFn(firstElement, password))
-    .then(({ result, user }) => {
-      if (!result) {
-        return {}
-      }
-      return user
-    })
-    .catch(err => {
-      throw new Error(err)
-    })
-
 const generateHash = generateHashMin(bcrypt)
 
 const compareHash = compareHashMin(bcrypt)
@@ -35,6 +21,5 @@ module.exports = {
   generateHash,
   compareHash,
   generateHashMin,
-  compareHashMin,
-  loginMin
+  compareHashMin
 }
