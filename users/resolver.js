@@ -1,7 +1,9 @@
 const db = require('./../database/database')
 const { generateHash, compareHash } = require('./../utils/utils1')
+const { loginMin } = require('./../utils/utils2')
 
 const users = db('users')
+const login = loginMin(users, compareHash)
 
 const User = [
   {
@@ -13,20 +15,6 @@ const User = [
     gender: 'female'
   }
 ]
-
-const login = (_, { username, password }) =>
-  users
-    .where('username', username)
-    .then(([firstElement]) => compareHash(firstElement, password))
-    .then(({ result, user }) => {
-      if (!result) {
-        return {}
-      }
-      return user
-    })
-    .catch(err => {
-      throw new Error(err)
-    })
 
 const signUp = (_, { username, password, age, gender, name }) =>
   generateHash(password).then(hash =>
@@ -56,4 +44,4 @@ const getUser = (_, { token }) =>
 
 const root = { login, getUser }
 const mutations = { signUp }
-module.exports = { root, mutations }
+module.exports = { root, mutations, login }
