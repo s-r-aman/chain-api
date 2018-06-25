@@ -12,7 +12,7 @@ app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
 app.use('/graphiql', graphiqlExpress({ endpointURL: 'graphql' }))
 
 app.get('/', (req, res) => {
-  res.send('You can make your GraphQL request at /graphiql')
+  res.send('You can make your GraphQL request at <a href="/graphiql">here.</a>')
 })
 
 //  eslint-disable-next-line
