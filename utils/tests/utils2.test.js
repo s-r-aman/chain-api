@@ -1,4 +1,4 @@
-const { loginMin } = require('./../utils2.js')
+const { loginMin, createTokenMin } = require('./../utils2.js')
 
 const user = {
   name: 'Alisha',
@@ -32,5 +32,22 @@ describe('Utility Functions - 2', () => {
       login('_', user).then(result => expect(result).toEqual(user)))
     test('return user null when result is false', () =>
       loginFalse('_', user).then(result => expect(result).toEqual({})))
+  })
+
+  describe('createToken', () => {
+    const token = 'token'
+    const secret = 'secret'
+    const payload = user.username
+    const dependency = jest.fn()
+    dependency.sign = jest.fn(() => token)
+    const createToken = createTokenMin({ dependency, secret })
+    test('return the token', () => {
+      const result = createToken({ payload })
+      expect(result).toBe(token)
+    })
+    test('call the sign method with correct args', () => {
+      createToken({ payload })
+      expect(dependency.sign).toHaveBeenCalledWith(payload, secret)
+    })
   })
 })

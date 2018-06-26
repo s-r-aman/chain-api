@@ -12,4 +12,7 @@ const loginMin = (db, passwordCompareFn) => (_, { username, password }) =>
       throw new Error(err)
     })
 
-module.exports = { loginMin }
+const createTokenMin = ({ dependency, secret }) => ({ payload }) =>
+  dependency.sign(payload, secret)
+
+module.exports = { loginMin, createTokenMin }
