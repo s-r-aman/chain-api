@@ -1,6 +1,12 @@
 const knex = require('knex')
 
-require('dotenv').config({ path: '.env' })
+if (process.env.NODE_ENV === 'test') {
+  //  eslint-disable-next-line
+  require('dotenv').config({ path: '.env.test' })
+} else {
+  //  eslint-disable-next-line
+  require('dotenv').config({ path: '.env' })
+}
 
 const db = knex({
   client: 'pg',
