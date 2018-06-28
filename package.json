@@ -5,24 +5,27 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "nodemon app.js",
-    "test-watch": "jest --watch"
+    "dev": "nodemon server.js",
+    "test-watch": "jest --watch && set NODE_ENV=\"test\" && export NODE_ENV='test'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^1.3.6",
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "eslint-plugin-jest": "^21.17.0",
     "express": "^4.16.3",
+    "faker": "^4.1.0",
     "graphql": "^0.13.2",
     "graphql-tools": "^3.0.2",
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.14.6",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "supertest": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -30,7 +33,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-prettier": "^2.6.0",
-    "jest": "^23.1.0",
+    "jest": "^23.2.0",
     "nodemon": "^1.17.5",
     "prettier": "^1.13.5"
   }
