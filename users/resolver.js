@@ -11,17 +11,6 @@ const createToken = createTokenMin({
   secret: process.env.SECRET
 })
 
-const User = [
-  {
-    _id: '7379896908',
-    userName: 'clare',
-    name: 'Clare',
-    password: '123456',
-    age: 18,
-    gender: 'female'
-  }
-]
-
 const signUp = (_, { username, password, age, gender, name }) =>
   generateHash(password).then(hash =>
     Users.insert({
@@ -49,9 +38,56 @@ const signUp = (_, { username, password, age, gender, name }) =>
       })
   )
 
-const getUser = (_, { token }) =>
-  User.find(({ token: authToken }) => token === authToken)
+const editProfile = async (
+  _,
+  {
+    token,
+    username: newUsername,
+    age,
+    gender,
+    name,
+    currentPassword,
+    newPassword
+  }
+) => {
+  let updatedUser
+  const data = await db('tokens').where({ token })
+  const [firstUser] = await db('users').where({ username: data[0].username })
+  const {
+    user: { username }
+  } = await compareHash(firstUser, currentPassword)
 
-const root = { login, getUser }
-const mutations = { signUp }
+  if (!newPassword) {
+    updatedUser = await db('users')
+      .where({ username })
+      .update(
+        {
+          username: newUsername,
+          age,
+          gender,
+          name,
+          updated_at: new Date()
+        },
+        ['username', 'name', 'age', 'gender']
+      )
+  } else {
+    updatedUser = await generateHash(newPassword).then(hash =>
+      Users.where({ username }).update({
+        username: newUsername,
+        age,
+        gender,
+        name,
+        password: hash
+      })
+    )
+  }
+  const [{ token: newToken }] = await db('tokens')
+    .where({ username })
+    .update({ username: newUsername }, ['token'])
+
+  return { ...updatedUser[0], token: newToken }
+}
+
+const root = { login }
+const mutations = { signUp, editProfile }
 module.exports = { root, mutations, login }
