@@ -6,7 +6,11 @@ const {
   users: [firstUser, secondUser, thirdUser]
 } = require('./__fixtures__/Users')
 
-const queries = require('./helpers/queries')
+const [
+  signUpQuery,
+  signUpErrorQuery,
+  editProfileQuery
+] = require('./helpers/queries')
 
 const graphql = query =>
   request(app)
@@ -23,13 +27,13 @@ afterEach(() => tokenDB.delete())
 describe('Mutations', () => {
   describe('signUp', () => {
     test('sign the new user up.', () =>
-      graphql(queries[0](firstUser)).then(({ body: { data: { signUp } } }) =>
+      graphql(signUpQuery(firstUser)).then(({ body: { data: { signUp } } }) =>
         expect({ ...signUp, password: firstUser.password }).toMatchObject(
           firstUser
         )
       ))
     test('return the correct token.', () =>
-      graphql(queries[0](firstUser)).then(({ body: { data: { signUp } } }) => {
+      graphql(signUpQuery(firstUser)).then(({ body: { data: { signUp } } }) => {
         expect(signUp).toHaveProperty('token')
         expect(signUp).not.toHaveProperty('password')
         return queryTokens({ username: signUp.username }).then(
@@ -39,16 +43,16 @@ describe('Mutations', () => {
         )
       }))
     test('give error on giving less arguments.', () =>
-      graphql(queries[1](secondUser)).then(({ body }) =>
+      graphql(signUpErrorQuery(secondUser)).then(({ body }) =>
         expect(body).toHaveProperty('errors')
       ))
   })
   describe('editProfile', () => {
     test('sign the new user up.', () =>
-      graphql(queries[0](firstUser))
+      graphql(signUpQuery(firstUser))
         .then(({ body: { data: { signUp: { token } } } }) =>
           graphql(
-            queries[2]({
+            editProfileQuery({
               token,
               ...thirdUser,
               currentPassword: firstUser.password
@@ -56,11 +60,15 @@ describe('Mutations', () => {
             })
           )
         )
-        .then(({ body: { data: { editProfile } } }) =>
+        .then(({ body: { data: { editProfile } } }) => {
           expect({
-            ...editProfile,
-            password: thirdUser.password
-          }).toMatchObject(thirdUser)
-        ))
+            ...editProfile
+          }).toMatchObject({
+            name: thirdUser.name,
+            gender: thirdUser.gender,
+            age: thirdUser.age
+          })
+          expect(editProfile).toHaveProperty('token')
+        }))
   })
 })
