@@ -27,18 +27,9 @@ module.exports = [
           token
         }
       }`,
-  ({
-    token,
-    username,
-    name,
-    age,
-    gender,
-    newPassword,
-    currentPassword
-  }) => `mutation {
+  ({ token, name, age, gender, newPassword, currentPassword }) => `mutation {
         editProfile(
           token: "${token}",
-          username: "${username}",
           name: "${name}",
           age: ${age},
           gender: "${gender}",
