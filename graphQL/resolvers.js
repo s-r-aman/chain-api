@@ -3,7 +3,10 @@ const {
   mutations: { signUp, editProfile }
 } = require('./../users/resolver')
 
+const { DateTime } = require('./scalarsResolvers')
+
 const resolver = {
+  DateTime,
   Query: {
     login
   },

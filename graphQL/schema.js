@@ -1,5 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools')
 
+const enums = require('./enums')
+const scalars = require('./scalarsDefs')
 const { UserSchema } = require('./../users/schema')
 const { HabitSchema } = require('./../habits/schema')
 
@@ -19,17 +21,21 @@ const RootQuery = `
     ): User,
     editProfile(
       token: String!,
-      username: String,
       name: String,
       age: Int,
       gender: String,
       currentPassword: String!,
       newPassword: String,
-    ): User
+    ): User,
+    addHabit(
+      token: String!,
+      diff_level: DIFFICULTY!,
+      icon: String!,
+    ): Habit
   }
 `
 
-const typeDefs = [RootQuery, UserSchema, HabitSchema]
+const typeDefs = [scalars, enums, RootQuery, UserSchema, HabitSchema]
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
