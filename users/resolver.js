@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const db = require('./../database/database')
 const { generateHash, compareHash } = require('./../utils/utils1')
-const { loginMin, createTokenMin } = require('./../utils/utils2')
+const { loginMin, createTokenMin, catchErrors } = require('./../utils/utils2')
 
 const Users = db('users')
 const Tokens = db('tokens')
@@ -40,15 +40,7 @@ const signUp = (_, { username, password, age, gender, name }) =>
 
 const editProfile = async (
   _,
-  {
-    token,
-    username: newUsername,
-    age,
-    gender,
-    name,
-    currentPassword,
-    newPassword
-  }
+  { token, age, gender, name, currentPassword, newPassword }
 ) => {
   let updatedUser
   const data = await db('tokens').where({ token })
@@ -62,7 +54,6 @@ const editProfile = async (
       .where({ username })
       .update(
         {
-          username: newUsername,
           age,
           gender,
           name,
@@ -71,23 +62,26 @@ const editProfile = async (
         ['username', 'name', 'age', 'gender']
       )
   } else {
-    updatedUser = await generateHash(newPassword).then(hash =>
-      Users.where({ username }).update({
-        username: newUsername,
-        age,
-        gender,
-        name,
-        password: hash
-      })
-    )
+    const hash = await generateHash(newPassword)
+    updatedUser = await db('users')
+      .where({ username })
+      .update(
+        {
+          age,
+          gender,
+          name,
+          password: hash,
+          updated_at: new Date()
+        },
+        ['username', 'name', 'age', 'gender']
+      )
   }
-  const [{ token: newToken }] = await db('tokens')
-    .where({ username })
-    .update({ username: newUsername }, ['token'])
+
+  const [{ token: newToken }] = await db('tokens').where({ username })
 
   return { ...updatedUser[0], token: newToken }
 }
 
 const root = { login }
-const mutations = { signUp, editProfile }
+const mutations = { signUp, editProfile: catchErrors(editProfile) }
 module.exports = { root, mutations, login }
