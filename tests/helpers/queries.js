@@ -42,5 +42,20 @@ module.exports = [
           gender,
           token
         }
+      }`,
+  ({ token, name, diff_level, icon, reminder }) => `mutation {
+        addHabit(
+          token: "${token}",
+          name: "${name}",
+          diff_level: ${diff_level},
+          icon: "${icon}",
+          reminder: "${reminder}"
+        ){
+          id,
+          name,
+          diff_level,
+          icon,
+          reminder
+        }
       }`
 ]

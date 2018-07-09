@@ -6,10 +6,10 @@ const UserSchema = `
     age: Int!,
     gender: String!,
     habits: [Habit],
-    token: String
+    token: String,
+    created_at: DateTime!,
+    updated_at: DateTime!,
   }
 `
-
-//  TODO: Make gender ENUM
 
 module.exports = { UserSchema }
