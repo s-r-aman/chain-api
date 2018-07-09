@@ -1,6 +1,6 @@
 const { name, internet } = require('faker')
 
-const users = [
+module.exports = [
   {
     username: internet.userName(),
     name: name.firstName(),
@@ -30,5 +30,3 @@ const users = [
     gender: 'other'
   }
 ]
-
-module.exports = { users }
