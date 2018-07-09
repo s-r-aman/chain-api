@@ -2,9 +2,7 @@ const request = require('supertest')
 const app = require('./../app')
 const db = require('./../database/database')
 
-const {
-  users: [firstUser, secondUser, thirdUser]
-} = require('./__fixtures__/Users')
+const [firstUser, secondUser, thirdUser] = require('./__fixtures__/Users')
 
 const [
   signUpQuery,
