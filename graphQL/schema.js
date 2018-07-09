@@ -29,8 +29,10 @@ const RootQuery = `
     ): User,
     addHabit(
       token: String!,
+      name: String!,
       diff_level: DIFFICULTY!,
       icon: String!,
+      reminder: DateTime,
     ): Habit
   }
 `
