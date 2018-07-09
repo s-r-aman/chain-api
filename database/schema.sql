@@ -18,7 +18,8 @@ CREATE TABLE users
 CREATE TABLE habits
 (
   id SERIAL NOT NULL PRIMARY KEY UNIQUE,
-  username VARCHAR(10) NOT NULL,
+  username VARCHAR(30) NOT NULL,
+  name VARCHAR(30) NOT NULL,
   diff_level diff_level NOT NULL,
   icon VARCHAR(10),
   reminder TIMESTAMP,
