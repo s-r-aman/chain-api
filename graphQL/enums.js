@@ -1,7 +1,13 @@
 module.exports = `
   enum DIFFICULTY {
-    Easy
-    Medium
-    Hard
+    easy,
+    medium,
+    hard,
+  },
+  enum GENDER {
+    male
+    female
+    other
+    undisclosed
   }
 `
