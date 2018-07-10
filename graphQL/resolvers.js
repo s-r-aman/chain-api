@@ -4,7 +4,8 @@ const {
 } = require('./../users/resolver')
 
 const {
-  mutations: { addHabit }
+  queries: { getHabit },
+  mutations: { addHabit, updateHabit, deleteHabit }
 } = require('./../habits/resolver')
 
 const { DateTime } = require('./scalarsResolvers')
@@ -12,12 +13,15 @@ const { DateTime } = require('./scalarsResolvers')
 const resolver = {
   DateTime,
   Query: {
-    login
+    login,
+    getHabit
   },
   Mutation: {
     signUp,
     editProfile,
-    addHabit
+    addHabit,
+    updateHabit,
+    deleteHabit
   }
 }
 
