@@ -15,4 +15,9 @@ const loginMin = (db, passwordCompareFn) => (_, { username, password }) =>
 const createTokenMin = ({ dependency, secret }) => ({ payload }) =>
   dependency.sign(payload, secret)
 
-module.exports = { loginMin, createTokenMin }
+const catchErrors = fn => (...args) =>
+  fn(...args).catch(err => {
+    throw new Error(err)
+  })
+
+module.exports = { loginMin, createTokenMin, catchErrors }
