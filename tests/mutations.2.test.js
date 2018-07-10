@@ -19,10 +19,11 @@ describe('Mutations.', () => {
           graphql(addHabitQuery({ token: signUp.token, ...firstHabit }))
         )
         .then(({ body: { data } }) => {
-          expect(data.addHabit).toMatchObject({
-            ...firstHabit,
-            reminder: new Date(firstHabit.reminder)
-          })
+          // FIXME: reminder: new Date(data.addHabit.reminder).toISOString()
+          expect({
+            ...data.addHabit,
+            reminder: new Date(firstHabit.reminder).toISOString()
+          }).toMatchObject(firstHabit)
         }))
   })
 })
