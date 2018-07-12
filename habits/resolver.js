@@ -103,12 +103,45 @@ const getHabit = async (_, { token, id }) => {
   return { ...habit[0] }
 }
 
-const queries = { getHabit: catchErrors(getHabit) }
+const getAllHabits = ({ username }) => db('habits').where({ username })
+
+const updateProgress = async (
+  _,
+  { token, id, coins, completed_dates, diamonds }
+) => {
+  const [{ username }] = await db('tokens').where({ token })
+  if (!(coins || completed_dates || diamonds)) {
+    throw new Error(
+      'Please provide a value to upgrade, all the values to be updated  are empty.'
+    )
+  }
+  const [habit] = await db('habits')
+    .where({ username, id })
+    .update({ coins, completed_dates, diamonds }, [
+      'id',
+      'name',
+      'diff_level',
+      'icon',
+      'reminder',
+      'coins',
+      'diamonds',
+      'completed_dates',
+      'created_at',
+      'updated_at'
+    ])
+  return habit
+}
+
+const queries = {
+  getHabit: catchErrors(getHabit),
+  getAllHabits: catchErrors(getAllHabits)
+}
 
 const mutations = {
   addHabit: catchErrors(addHabit),
   updateHabit: catchErrors(updateHabit),
-  deleteHabit: catchErrors(deleteHabit)
+  deleteHabit: catchErrors(deleteHabit),
+  updateProgress: catchErrors(updateProgress)
 }
 
 module.exports = { mutations, queries }

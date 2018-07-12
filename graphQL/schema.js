@@ -9,8 +9,8 @@ const { resolvers } = require('./resolvers')
 
 const RootQuery = `
   type Query { 
-    login(username: String!, password: String!): User,
-    getHabit(token: String!, id: ID!): Habit,
+    User(username: String!, password: String!): User,
+    Habit(token: String!, id: ID!): Habit,
   },
   type Mutation {
     signUp(
@@ -46,6 +46,13 @@ const RootQuery = `
     deleteHabit(
       token: String!,
       id: ID!,
+    ): Habit,
+    updateProgress(
+      token: String!,
+      id: ID!,
+      coins: Int,
+      diamonds: Int,
+      completed_dates: [DateTime]
     ): Habit
   }
 `
