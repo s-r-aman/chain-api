@@ -52,7 +52,10 @@ const RootQuery = `
       id: ID!,
       coins: Int,
       diamonds: Int,
-      completed_dates: [DateTime]
+    ): Habit,
+    toggleCompletion(
+      token: String!,
+      id: ID!,
     ): Habit
   }
 `

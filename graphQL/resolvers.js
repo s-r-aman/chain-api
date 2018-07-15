@@ -5,7 +5,13 @@ const {
 
 const {
   queries: { getHabit, getAllHabits },
-  mutations: { addHabit, updateHabit, deleteHabit, updateProgress }
+  mutations: {
+    addHabit,
+    updateHabit,
+    deleteHabit,
+    updateProgress,
+    toggleCompletion
+  }
 } = require('./../habits/resolver')
 
 const { DateTime } = require('./scalarsResolvers')
@@ -22,7 +28,8 @@ const resolver = {
     addHabit,
     updateHabit,
     deleteHabit,
-    updateProgress
+    updateProgress,
+    toggleCompletion
   },
   User: { habits: getAllHabits }
 }
