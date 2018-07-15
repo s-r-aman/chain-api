@@ -4,7 +4,7 @@ const {
 } = require('./../users/resolver')
 
 const {
-  queries: { getHabit, getAllHabits },
+  queries: { getHabit, getAllHabits, getHabitsWithToken },
   mutations: {
     addHabit,
     updateHabit,
@@ -20,7 +20,8 @@ const resolver = {
   DateTime,
   Query: {
     User: login,
-    Habit: getHabit
+    Habit: getHabit,
+    Habits: getHabitsWithToken
   },
   Mutation: {
     signUp,

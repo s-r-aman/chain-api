@@ -183,9 +183,16 @@ const toggleCompletion = async (_, { token, id }) => {
   }
 }
 
+const getHabitsWithToken = async (_, { token }) => {
+  const [{ username }] = await db('tokens').where({ token })
+  const habits = await db('habits').where({ username })
+  return habits
+}
+
 const queries = {
   getHabit: catchErrors(getHabit),
-  getAllHabits: catchErrors(getAllHabits)
+  getAllHabits: catchErrors(getAllHabits),
+  getHabitsWithToken: catchErrors(getHabitsWithToken)
 }
 
 const mutations = {
