@@ -1,19 +1,19 @@
-# Don't Break the **CHAIN**
+# Don't Break the **CHAIN**⛓
 
-> Back-end for the app _Chains_.
+> Back-end 🔙 for the app _Chains_.
 
-## Contributions are welcome. To contribute -
+## Contributions are welcome🙏. To contribute -
 
 1.  Run command `npm install`.
-2.  Then to start server run `npm run dev`.
-3.  To run tests `npm run test` or `npm run test-watch` to run in watch mode.
+2.  Then to start server💻 run `npm run dev`.
+3.  To run tests 💯 `npm run test` or `npm run test-watch` to run in watch mode 👀.
 
 ---
 
 ### Technology Used -
 
 - Node JS
-- PostgreSQL
+- PostgreSQL 🐘
 - GraphQL
 
 ---
@@ -23,7 +23,7 @@
 - Express JS
 - Knex JS
 - Apollo
-- Json Web Tokens
+- Json Web Tokens 
 
 ---
 
